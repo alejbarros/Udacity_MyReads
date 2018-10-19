@@ -21,7 +21,7 @@ The application is similar Goodreads, you can choose three main areas : read, cu
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-## structure Project
+## Structure Project
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
@@ -49,7 +49,7 @@ The application is similar Goodreads, you can choose three main areas : read, cu
         ├── Search.js # Component to search different books by querys to API.
         └── Shelf.js #component represents shelf.
     └── utils
-        ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
+        └── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
 
 ```
 
