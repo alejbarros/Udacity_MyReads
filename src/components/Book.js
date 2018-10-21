@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
 import Modal from 'react-responsive-modal';
+import noCover from '../images/no-cover-image.png';
 
 class Book extends Component {
 
@@ -28,20 +29,26 @@ class Book extends Component {
   render() {
     const book = this.props.book;
     const { open } = this.state;
+    const coverImg =
+      book.imageLinks && book.imageLinks.thumbnail
+        ? book.imageLinks.thumbnail
+        : noCover;
+    const title = book.title ? book.title : 'No title available';
+
     return (
       <li>
-      <div class="flip-card">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">
+      <div className="flip-card">
+        <div className="flip-card-inner">
+            <div className="flip-card-front">
               <div className="book-cover" style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url("${book.imageLinks.thumbnail}")`
+                backgroundImage: `url("${coverImg}")`
                   }}>
               </div>
             </div>
-            <div class="flip-card-back">
-              <div className="book-title">{book.title}</div>
+            <div className="flip-card-back">
+              <div className="book-title">{title}</div>
               <div className="book-authors">{book.authors}</div>
               <button onClick={this.onOpenModal}>Info</button>
               <Modal open={open} onClose={this.onCloseModal} center>
@@ -54,7 +61,7 @@ class Book extends Component {
               </Modal>
               <div className="book-shelf-changer">
                 <select onChange={this.change_shelf} value={book.shelf}>
-                  <option value="none" disabled>Move to...</option>
+                  <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
                   <option value="read">Read</option>

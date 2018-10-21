@@ -6,7 +6,7 @@ import {PropTypes} from 'prop-types'
 class BooksContent extends Component {
 
   static propTypes = {
-    books: PropTypes.object.isRequired,
+    books: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired
   }
 

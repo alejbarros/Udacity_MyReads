@@ -9,7 +9,8 @@ class Search extends Component {
 
   state = {
     books: [],
-    query: ''
+    query: '',
+    searchErr: false
   }
 
   static propTypes = {
@@ -41,33 +42,36 @@ class Search extends Component {
       return books
     }
 
-    search = (val) => {
-      if (val.length !== 0) {
-        BooksAPI.search(val, 10).then((books) => {
-          if (books.length > 0) {
-            books = books.filter((book) => (book.imageLinks))
-            books = this.changeShelf(books)
-            this.setState(() => {
-              return {books: books}
-            })
-          }
-        })
-      } else {
-        this.setState({books: [], query: ''})
-      }
-    }
+getBooks = event => {
+  const query = event.target.value;
+  this.setState({ query });
+    // if user input => run the search
+  if (query) {
+    BooksAPI.search(query.trim(), 20).then(books => {
 
-    add_book = (book, shelf) => {
-      this.props.onChange(book, shelf)
-    }
+      if(books.length > 0){
+        books = this.changeShelf(books)
+        this.setState({ books: books, searchErr: false })
+      }else {
+        this.setState({ books: [], searchErr: true })
+      }
+    });
+      // if query is empty => reset state to default
+    } else this.setState({ books: [], searchErr: false });
+  };
+
+  add_book = (book, shelf) => {
+    this.props.onChange(book, shelf)
+  }
 
   render() {
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link to='/' className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.handleChange}/>
+            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.getBooks}/>
           </div>
         </div>
         <div className="search-books-results">
@@ -76,6 +80,9 @@ class Search extends Component {
               this.add_book(book, shelf)
             }}/>))}
           </ol>
+          {this.state.searchErr && (
+            <h3>Search did not return any books. Please try again!</h3>
+          )}
         </div>
       </div>
     )
