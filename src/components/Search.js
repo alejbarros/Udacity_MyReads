@@ -18,14 +18,6 @@ class Search extends Component {
     myBooks: PropTypes.array.isRequired
   }
 
-  handleChange = (event) => {
-      var value = event.target.value
-      this.setState(() => {
-        return {query: value}
-      })
-      this.search(value)
-    }
-
     changeShelf = (books) => {
       let all_Books = this.props.myBooks
       for (let book of books) {
@@ -75,7 +67,7 @@ getBooks = event => {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.query.length > 0 && this.state.books.map((book, index) => (<Book book={book} key={index} onUpdate={(shelf) => {
+            {this.state.query.length > 0 && this.state.books.map((book, id) => (<Book book={book} key={book.id} onUpdate={(shelf) => {
               this.add_book(book, shelf)
             }}/>))}
           </ol>
