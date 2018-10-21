@@ -48,7 +48,6 @@ getBooks = event => {
     // if user input => run the search
   if (query) {
     BooksAPI.search(query.trim(), 20).then(books => {
-
       if(books.length > 0){
         books = this.changeShelf(books)
         this.setState({ books: books, searchErr: false })
